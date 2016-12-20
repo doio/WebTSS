@@ -4,7 +4,7 @@ $aGlobalConfig = array
 	"interface" => array
 	(
 		"appURL" => "http://virulent.pw/webtss", // Full url to WebTSS, no trailing slash or space.
-		"theme" => "default"
+		"theme" => "default" // Bootstrap theme for interfaces. Themes are in /css with the naming scheme "*.bootstrap.min.css".
 	),
 	"cron" => array
 	(
@@ -36,4 +36,5 @@ $aGlobalConfig = array
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+if(!file_exists(dirname(__FILE__).'/css/'.$aGlobalConfig['interface']['theme'].'.bootstrap.min.css')) { die("The theme '".$aGlobalConfig['interface']['theme']."' does not exist."); }
 ?>
