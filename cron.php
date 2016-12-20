@@ -2,7 +2,10 @@
 	require 'config.php';
 	require 'functions.php';
 
-	 cronPrint('WebTSS cron running..');
+	if(!$aGlobalConfig['cron']['enableWebAccess'])
+		die("The website administrator has disabled cron triggers through the URL.");
+	
+	cronPrint('WebTSS cron running..');
 
 	$webTSSRoot = realpath(dirname(__FILE__));
 	$mysqli = new mysqli($aGlobalConfig['database']['host'], $aGlobalConfig['database']['username'], $aGlobalConfig['database']['password'], $aGlobalConfig['database']['database']);
@@ -38,7 +41,7 @@
 		while ($stmt->fetch()) {
 			cronPrint("Working on $ecid ($platform)..");
 
-			$command = $aGlobalConfig['python2.7Location'].' '.$webTSSRoot.'/bins/savethemblobs.py '.hexdec($ecid).' '.$platform.' --skip-cydia --skip-ifaith --save-dir '.$webTSSRoot.'/tss/'.hexdec($ecid);
+			$command = $aGlobalConfig['cron']['python2.7Location'].' '.$webTSSRoot.'/bins/savethemblobs.py '.hexdec($ecid).' '.$platform.' --skip-cydia --skip-ifaith --save-dir '.$webTSSRoot.'/tss/'.hexdec($ecid);
 		
 			if(!is_dir($webTSSRoot.'/tss/'.hexdec($ecid))) {
 				cronPrint("Creating \"".$webTSSRoot.'/tss/'.hexdec($ecid)."\"..");

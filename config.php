@@ -1,8 +1,16 @@
 <?php
 $aGlobalConfig = array
 (
-	"appURL" => "http://virulent.pw/webtss", // Full url to WebTSS, no trailing slash or space.
-	"python2.7Location" => "/usr/bin/python2.7", // Path to python 2.7, no trailing slash or space.
+	"interface" => array
+	(
+		"appURL" => "http://virulent.pw/webtss", // Full url to WebTSS, no trailing slash or space.
+		"theme" => "default"
+	),
+	"cron" => array
+	(
+		"python2.7Location" => "/usr/bin/python2.7", // Path to python 2.7, no trailing slash or space.
+		"enableWebAccess" => True // Allow cron triggering through the url.
+	),
 	"recaptcha" => array
 	(
 		// Get it from here: https://www.google.com/recaptcha/intro/index.html
