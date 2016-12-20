@@ -7,10 +7,9 @@
 	$webTSSRoot = realpath(dirname(__FILE__));
 	$mysqli = new mysqli($aGlobalConfig['database']['host'], $aGlobalConfig['database']['username'], $aGlobalConfig['database']['password'], $aGlobalConfig['database']['database']);
 	$tssPermissions = substr(sprintf('%o', fileperms($webTSSRoot.'/tss')), -4);
-	
-	if(!is_dir($webTSSRoot.'/tss')) {
+
+	if(!is_dir($webTSSRoot.'/tss')) 
 		cronPrint('Please create the directory "'.$webTSSRoot.'/tss'.'"..');
-	}
 	
 	if(!is_writable($webTSSRoot.'/tss')) 
 		die('Can\'t write to "'.$webTSSRoot.'/tss"..');
