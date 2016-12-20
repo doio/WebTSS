@@ -6,19 +6,17 @@
 			throw new Exception('Please provide an ECID.');
 		if(empty($_POST['platform']))
 			throw new Exception('Please provide a platform.');
-		if(!is_numeric($_POST['ecid']))
-			throw new Exception('Invalid ECID.');
 		if(!ctype_xdigit($_POST['ecid']))
 			throw new Exception('Invalid ECID.');
 		
 		if(ctype_digit($_POST['ecid'])) { // Client provided a non-hex ECID. Convert it for them.
-			$ecid = dechex($_POST['ecid']);
+			$ecid = strtoupper(dechex($_POST['ecid']));
 		} elseif(ctype_xdigit($_POST['ecid'])) { // Client provided a hex ECID, just assign the variable.
 			$ecid = $_POST['ecid'];
 		} else {
 			throw new Exception('Invalid ECID.');
 		}
-		
+
 		$conn = new mysqli($aGlobalConfig['database']['host'], $aGlobalConfig['database']['username'], $aGlobalConfig['database']['password'], $aGlobalConfig['database']['database']);
 
 		if (mysqli_connect_errno())
@@ -30,7 +28,7 @@
 		$stmt->close();
 		$conn->close();
 
-		header('Location: '.str_replace("/".basename(__FILE__), "", $_SERVER['PHP_SELF']).'/tss/'.hexdec($_POST['ecid']));
+		header('Location: '.str_replace("/".basename(__FILE__), "", $_SERVER['PHP_SELF']).'/tss/'.hexdec($ecid));
 	} catch (Exception $e) {
 		header("Location: index.php?e=".urlencode($e->getMessage()));
 	}
