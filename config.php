@@ -3,6 +3,13 @@ $aGlobalConfig = array
 (
 	"appURL" => "http://virulent.pw/webtss", // Full url to WebTSS, no trailing slash or space.
 	"python2.7Location" => "/usr/bin/python2.7", // Path to python 2.7, no trailing slash or space.
+	"recaptcha" => array
+	(
+		// Get it from here: https://www.google.com/recaptcha/intro/index.html
+		"enabled" => False,
+		"siteKey" => "",
+		"secretKey" => ""
+	),
 	"database" => array 
 	(
 		"host" => "localhost",
