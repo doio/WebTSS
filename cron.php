@@ -7,9 +7,10 @@
 	$webTSSRoot = realpath(dirname(__FILE__));
 	$mysqli = new mysqli($aGlobalConfig['database']['host'], $aGlobalConfig['database']['username'], $aGlobalConfig['database']['password'], $aGlobalConfig['database']['database']);
 	$tssPermissions = substr(sprintf('%o', fileperms($webTSSRoot.'/tss')), -4);
-
-	if(!is_dir($webTSSRoot.'/tss')) 
+	
+	if(!is_dir($webTSSRoot.'/tss')) {
 		cronPrint('Please create the directory "'.$webTSSRoot.'/tss'.'"..');
+	}
 	
 	if(!is_writable($webTSSRoot.'/tss')) 
 		die('Can\'t write to "'.$webTSSRoot.'/tss"..');
@@ -28,10 +29,13 @@
 
 	if ($stmt = $mysqli->prepare("SELECT ecid, platform FROM devices")) {
 
+		/* execute statement */
 		$stmt->execute();
 
+		/* bind result variables */
 		$stmt->bind_result($ecid, $platform);
 
+		/* fetch values */
 		while ($stmt->fetch()) {
 			cronPrint("Working on $ecid ($platform)..");
 
@@ -50,9 +54,11 @@
 			}
 		}
 
+		/* close statement */
 		$stmt->close();
 	}
 
+	/* close connection */
 	$mysqli->close();
 	cronPrint('Cron finished.'); 
 ?>
